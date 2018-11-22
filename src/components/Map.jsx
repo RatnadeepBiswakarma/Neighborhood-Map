@@ -16,7 +16,7 @@ class Map extends Component {
     script.defer = true;
     script.addEventListener("load", () => {
       this.setState({ isMapLoaded: true });
-      this.initMap();
+      
     });
 
     document.body.appendChild(script);
@@ -31,6 +31,7 @@ class Map extends Component {
           this.props.setPlaces(locations, true);
           let status = data.meta.code;
           this.setState({ requestStatus: status });
+          this.initMap();
         }
       })
       .catch(function(err) {
@@ -77,12 +78,12 @@ class Map extends Component {
 
             infoWindow.open(map, marker);
           });
+          // markers = [];
           markers.push(marker);
         });
         let bounds = new google.maps.LatLngBounds();
         // storing those values to parent state to use it in parent
         // file and other component in future
-        this.props.setMapMarkers(map, markers, infoWindow);
         // displaying all markers by default
         markers.map(marker => {
           marker.setMap(map);
@@ -92,10 +93,10 @@ class Map extends Component {
         // render markers on map based on the text input
         document.getElementById("query").addEventListener("input", e => {
           let val = e.target.value
-            .toString()
-            .toLowerCase()
-            .trim();
-
+          .toString()
+          .toLowerCase()
+          .trim();
+          
           infoWindow.close();
           // if text field is empty show all marker
           if (val === "") {
@@ -109,23 +110,24 @@ class Map extends Component {
               // text are processed strictly for better search results
               if (
                 marker.title
-                  .toString()
-                  .toLowerCase()
-                  .trim()
-                  .includes(val)
-              ) {
-                marker.setMap(map);
-                marker.setAnimation(google.maps.Animation.DROP);
-                bounds.extend(marker.position);
-              } else {
-                marker.setMap(null);
-              }
-            });
-          }
-          map.fitBounds(bounds);
-        });
+                .toString()
+                .toLowerCase()
+                .trim()
+                .includes(val)
+                ) {
+                  marker.setMap(map);
+                  marker.setAnimation(google.maps.Animation.DROP);
+                  bounds.extend(marker.position);
+                } else {
+                  marker.setMap(null);
+                }
+              });
+            }
+            map.fitBounds(bounds);
+          });
+          this.props.setMapMarkers(map, markers, infoWindow);
+        }
       }
-    }
   };
   render() {
     return <div tabIndex='-1' role='application' id="map" />;
