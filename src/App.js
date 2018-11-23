@@ -53,10 +53,11 @@ class App extends Component {
                   title="Show All Markers"
                   className="show-all-markers"
                   onClick={() => {
-                    this.state.markers.map(marker => {
+                    this.state.markers.forEach(marker => {
                       this.state.infoWindow.close();
                       marker.setAnimation(window.google.maps.Animation.DROP);
-                      marker.setMap(this.state.map);
+                      return marker.setMap(this.state.map);
+                      
                     });
                   }}
                 >
@@ -65,7 +66,7 @@ class App extends Component {
               </div>
               <ul id="ul">
                 {this.state.markers.map(marker => {
-                  const { map, markers, infoWindow } = this.state;
+                  const { map, markers} = this.state;
                   return (
                     <li
                       tabIndex='0'
@@ -73,15 +74,15 @@ class App extends Component {
                       id={marker.id}
                       onClick={e => {
                         this.setState({ displayAllMarkers: false });
-                        markers.map(mark => {
+                        markers.forEach(mark => {
                           if (mark.id.trim() === e.target.id.trim()) {
                             mark.setMap(map);
                             let google = window.google;
                             mark.setAnimation(google.maps.Animation.BOUNCE);
-                            google.maps.event.trigger(mark, "click");
+                            return google.maps.event.trigger(mark, "click");
                           } else {
                             mark.setMap(null);
-                            mark.setAnimation(null);
+                            return mark.setAnimation(null);
                           }
                         });
                       }}

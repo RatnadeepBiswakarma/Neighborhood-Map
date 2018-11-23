@@ -57,7 +57,7 @@ class Map extends Component {
       let infoWindow = new google.maps.InfoWindow();
       if (this.state.requestStatus === 200) {
         const parentState = this.props.parentState;
-        parentState.places.map(place => {
+        parentState.places.forEach(place => {
           let location = place.location;
           let address = place.location.formattedAddress;
           // create marker
@@ -76,18 +76,18 @@ class Map extends Component {
               }</h3><address>${address}</address></div>`
             );
 
-            infoWindow.open(map, marker);
+            return infoWindow.open(map, marker);
           });
           // markers = [];
-          markers.push(marker);
+          return markers.push(marker);
         });
         let bounds = new google.maps.LatLngBounds();
         // storing those values to parent state to use it in parent
         // file and other component in future
         // displaying all markers by default
-        markers.map(marker => {
+        markers.forEach(marker => {
           marker.setMap(map);
-          bounds.extend(marker.position);
+          return bounds.extend(marker.position);
         });
         map.fitBounds(bounds);
         // render markers on map based on the text input
@@ -100,12 +100,12 @@ class Map extends Component {
           infoWindow.close();
           // if text field is empty show all marker
           if (val === "") {
-            markers.map(marker => {
+            markers.forEach(marker => {
               marker.setMap(map);
-              marker.setAnimation(google.maps.Animation.DROP);
+              return marker.setAnimation(google.maps.Animation.DROP);
             });
           } else {
-            markers.map(marker => {
+            markers.forEach(marker => {
               // render those marker which have any of the text inputted letters
               // text are processed strictly for better search results
               if (
@@ -117,9 +117,9 @@ class Map extends Component {
                 ) {
                   marker.setMap(map);
                   marker.setAnimation(google.maps.Animation.DROP);
-                  bounds.extend(marker.position);
+                  return bounds.extend(marker.position);
                 } else {
-                  marker.setMap(null);
+                  return marker.setMap(null);
                 }
               });
             }
