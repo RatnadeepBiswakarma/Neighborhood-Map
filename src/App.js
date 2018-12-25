@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import Map from "./components/Map";
-import Header from "./components/Header";
-import "./components/Menu.css";
-import Menu from './components/Menu';
+import Map from "./components/Map/Map";
+import Header from "./components/Header/Header";
+import "./components/Menu/Menu.css";
+import Menu from './components/Menu/Menu';
 
 class App extends Component {
   state = {
