@@ -57,7 +57,7 @@ class Map extends Component {
       let infoWindow = new google.maps.InfoWindow();
       if (this.state.requestStatus === 200) {
         const parentState = this.props.parentState;
-        parentState.places.forEach(place => {
+        parentState.places.map(place => {
           let location = place.location;
           let address = place.location.formattedAddress;
           // create marker

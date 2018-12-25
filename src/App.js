@@ -3,6 +3,7 @@ import "./App.css";
 import Map from "./components/Map";
 import Header from "./components/Header";
 import "./components/Menu.css";
+import Menu from './components/Menu';
 
 class App extends Component {
   state = {
@@ -64,36 +65,9 @@ class App extends Component {
                   Show All
                 </span>
               </div>
-              <ul id="ul">
-                {this.state.markers.map(marker => {
-                  const { map, markers} = this.state;
-                  return (
-                    <li
-                      tabIndex='0'
-                      role='button'
-                      id={marker.id}
-                      onClick={e => {
-                        this.setState({ displayAllMarkers: false });
-                        markers.forEach(mark => {
-                          if (mark.id.trim() === e.target.id.trim()) {
-                            mark.setMap(map);
-                            let google = window.google;
-                            mark.setAnimation(google.maps.Animation.BOUNCE);
-                            return google.maps.event.trigger(mark, "click");
-                          } else {
-                            mark.setMap(null);
-                            return mark.setAnimation(null);
-                          }
-                        });
-                      }}
-                      key={marker.id}
-                      title={marker.title}
-                    >
-                      {marker.title}
-                    </li>
-                  );
-                })}
-              </ul>
+              {this.state.markers.length > 0 && 
+              <Menu map={this.state.map} markers={this.state.markers}/>
+              }
             </nav>
           )}
         </main>
