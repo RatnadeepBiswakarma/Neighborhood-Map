@@ -4,6 +4,7 @@ import Map from "./components/Map/Map";
 import Header from "./components/Header/Header";
 import "./components/Menu/Menu.css";
 import Menu from './components/Menu/Menu';
+import Loader from './components/Loader/Loader';
 
 class App extends Component {
   state = {
@@ -29,6 +30,7 @@ class App extends Component {
     return (
       <div id="container">
         <Header />
+        {this.state.places.length === 0 && <Loader />}
         <main id="main">
           <Map
             parentState={this.state}
