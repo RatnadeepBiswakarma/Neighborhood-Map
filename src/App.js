@@ -3,7 +3,7 @@ import "./App.css";
 import Map from "./components/Map/Map";
 import Header from "./components/Header/Header";
 import "./components/Menu/Menu.css";
-import Menu from './components/Menu/Menu';
+import Navbar from './components/Navbar/Nav';
 import Loader from './components/Loader/Loader';
 
 class App extends Component {
@@ -29,48 +29,19 @@ class App extends Component {
   render() {
     return (
       <div id="container">
+      {/* header component  */}
         <Header />
+        {/* loader component */}
         {this.state.places.length === 0 && <Loader />}
         <main id="main">
+        {/* google map component  */}
           <Map
             parentState={this.state}
             setMapMarkers={this.setMapMarkers}
             setPlaces={this.setPlaces}
           />
           {this.state.places.length > 0 && (
-            <nav className="nav" id="navbar">
-              <form>
-                <input
-                  title="Search in List"
-                  type="text"
-                  autoFocus={true}
-                  id="query"
-                  placeholder="Search"
-                />
-              </form>
-              <div tabIndex='0' className="location-list-heading">
-                Location List
-                <span
-                  role='button'
-                  tabIndex='0'
-                  title="Show All Markers"
-                  className="show-all-markers"
-                  onClick={() => {
-                    this.state.markers.forEach(marker => {
-                      this.state.infoWindow.close();
-                      marker.setAnimation(window.google.maps.Animation.DROP);
-                      return marker.setMap(this.state.map);
-                      
-                    });
-                  }}
-                >
-                  Show All
-                </span>
-              </div>
-              {this.state.markers.length > 0 && 
-              <Menu map={this.state.map} markers={this.state.markers}/>
-              }
-            </nav>
+            <Navbar map={this.state.map} infoWindow={this.state.infoWindow} markers={this.state.markers} />
           )}
         </main>
       </div>
