@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Error from "./../Error/Error";
+import { getForesquareData } from './../Foresquare/Foresquare';
 
 class Map extends Component {
   parentState = this.props.parentState;
@@ -16,14 +18,11 @@ class Map extends Component {
     script.defer = true;
     script.addEventListener("load", () => {
       this.setState({ isMapLoaded: true });
-      
     });
 
     document.body.appendChild(script);
     // fetch data from foresquare, nearby location of London
-    fetch(
-      "https://api.foursquare.com/v2/venues/search?client_id=FK3EHLUMPDSBQ20OILR1RRIJTIEIJGESP4EJA3VKUHZXQRWR&client_secret=2RGH3VXL1K033FGQR1Q0R2OKPEHS4GEGZZXKSHXCONY1WZKT&v=20180323&near=london"
-    )
+    getForesquareData('london')
       .then(res => res.json())
       .then(data => {
         let locations = data.response.venues;
@@ -35,7 +34,10 @@ class Map extends Component {
         }
       })
       .catch(function(err) {
-        alert(`Error occurred while fetching data from server, app may not work correctly: ${err}`);
+        return <Error message="hello there, error occurred!!!" />;
+        // alert(
+        //   `Error occurred while fetching data from server, app may not work correctly: ${err}`
+        // );
       });
   }
   initMap = () => {
@@ -93,10 +95,10 @@ class Map extends Component {
         // render markers on map based on the text input
         document.getElementById("query").addEventListener("input", e => {
           let val = e.target.value
-          .toString()
-          .toLowerCase()
-          .trim();
-          
+            .toString()
+            .toLowerCase()
+            .trim();
+
           infoWindow.close();
           // if text field is empty show all marker
           if (val === "") {
@@ -110,27 +112,27 @@ class Map extends Component {
               // text are processed strictly for better search results
               if (
                 marker.title
-                .toString()
-                .toLowerCase()
-                .trim()
-                .includes(val)
-                ) {
-                  marker.setMap(map);
-                  marker.setAnimation(google.maps.Animation.DROP);
-                  return bounds.extend(marker.position);
-                } else {
-                  return marker.setMap(null);
-                }
-              });
-            }
-            map.fitBounds(bounds);
-          });
-          this.props.setMapMarkers(map, markers, infoWindow);
-        }
+                  .toString()
+                  .toLowerCase()
+                  .trim()
+                  .includes(val)
+              ) {
+                marker.setMap(map);
+                marker.setAnimation(google.maps.Animation.DROP);
+                return bounds.extend(marker.position);
+              } else {
+                return marker.setMap(null);
+              }
+            });
+          }
+          map.fitBounds(bounds);
+        });
+        this.props.setMapMarkers(map, markers, infoWindow);
       }
+    }
   };
   render() {
-    return <div tabIndex='-1' role='application' id="map" />;
+    return <div tabIndex="-1" role="application" id="map" />;
   }
 }
 
