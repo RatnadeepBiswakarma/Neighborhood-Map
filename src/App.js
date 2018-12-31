@@ -4,7 +4,7 @@ import Map from "./components/Map/Map";
 import Header from "./components/Header/Header";
 import "./components/Menu/Menu.css";
 import Navbar from "./components/Navbar/Nav";
-import Loader from "./components/Loader/Loader";
+// import Loader from "./components/Loader/Loader";
 import Error from "./components/Error/Error";
 import { getLocationData } from "./components/Apis/Apis";
 
@@ -18,7 +18,6 @@ class App extends Component {
       markers: [],
       infoWindow: null,
       error: false,
-      loader: true,
       errorMessage: '',
       isMapLoaded: false,
       query: "",
@@ -57,13 +56,13 @@ class App extends Component {
     this.setState({ map: map, markers: markers, infoWindow: infoWindow });
   };
   render() {
-    const {places, markers, map, infoWindow, error, loader} = this.state;
+    const {places, markers, map, infoWindow, error} = this.state;
     return (
       <div id="container">
         {/* header component  */}
         <Header />
         {/* loader component */}
-        {loader && <Loader />}
+        {/* {loader && <Loader />} */}
         {/* error message popup */}
         {error && <Error message='Failed to fetch location data' />}
         <main id="main">
