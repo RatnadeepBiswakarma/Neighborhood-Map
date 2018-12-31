@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Error from "./../Error/Error";
-import { getLocationData, loadGoogleMap } from "../Apis/Apis";
+// import Error from "./../Error/Error";
+import { loadGoogleMap } from "../Apis/Apis";
 
 class Map extends Component {
-  parentState = this.props.parentState;
+  // parentState = this.props.parentState;
   state = {
     isMapLoaded: false,
     requestStatus: "",
@@ -11,28 +11,9 @@ class Map extends Component {
     markers: []
   };
   componentDidMount() {
-    loadGoogleMap();
-    // fetch data from foresquare, nearby location of London
-    getLocationData("london")
-      .then(res => res.json())
-      .then(data => {
-        let locations = data.response.venues;
-        if (locations) {
-          this.props.setPlaces(locations, true);
-          let status = data.meta.code;
-          this.setState({ requestStatus: status });
-          this.initMap();
-        }
-      })
-      .catch(function(err) {
-        return <Error message="hello there, error occurred!!!" />;
-        // alert(
-        //   `Error occurred while fetching data from server, app may not work correctly: ${err}`
-        // );
-      });
+    loadGoogleMap(this.initMap);
   }
   initMap = () => {
-    // if (this.state.isMapLoaded) {
     let google = window.google;
     let markers = [];
     let map = new google.maps.Map(document.getElementById("map"), {
@@ -40,17 +21,13 @@ class Map extends Component {
       zoom: 18
     });
     this.renderMarkers(map, markers);
-    // }
   };
   // render markers on the map
   renderMarkers = (map, markers) => {
-    // if (this.state.isMapLoaded) {
     // setting google variable for use
     let google = window.google;
     let infoWindow = new google.maps.InfoWindow();
-    if (this.state.requestStatus === 200) {
-      const parentState = this.props.parentState;
-      parentState.places.map(place => {
+      this.props.places.map(place => {
         let location = place.location;
         let address = place.location.formattedAddress;
         // create marker
@@ -119,8 +96,9 @@ class Map extends Component {
         map.fitBounds(bounds);
       });
       this.props.setMapMarkers(map, markers, infoWindow);
-    }
     // }
+    // }
+    // this.initMap();
   };
   render() {
     return <div tabIndex="-1" role="application" id="map" />;
