@@ -18,6 +18,7 @@ class App extends Component {
       markers: [],
       infoWindow: null,
       error: false,
+      loader: true,
       errorMessage: '',
       isMapLoaded: false,
       query: "",
@@ -36,9 +37,9 @@ class App extends Component {
       .then(data => {
         let locations = data.response.venues;
         if (locations) {
-          this.setState({ places: locations });
-          let status = data.meta.code;
-          this.setState({ requestStatus: status });
+          this.setState({ places: locations, loader: false });
+          // let status = data.meta.code;
+          // this.setState({ requestStatus: status });
         }
       })
       .catch((err) => {
@@ -55,13 +56,13 @@ class App extends Component {
     this.setState({ map: map, markers: markers, infoWindow: infoWindow });
   };
   render() {
-    const {places, markers, map, infoWindow, error} = this.state;
+    const {places, markers, map, infoWindow, error, loader} = this.state;
     return (
       <div id="container">
         {/* header component  */}
         <Header />
         {/* loader component */}
-        {places.length < 1 && <Loader />}
+        {loader && <Loader />}
         {/* error message popup */}
         {error && <Error message='Failed to fetch location data' />}
         <main id="main">
