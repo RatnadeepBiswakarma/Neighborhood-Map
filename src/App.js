@@ -46,25 +46,26 @@ class App extends Component {
     this.setState({ map: map, markers: markers, infoWindow: infoWindow });
   };
   render() {
+    const {places, markers, map, infoWindow} = this.state;
     return (
       <div id="container">
         {/* header component  */}
         <Header />
         {/* loader component */}
-        {this.state.places.length === 0 && <Loader />}
+        {places.length < 1 && <Loader />}
         <main id="main">
           {/* google map component  */}
-          {this.state.places.length > 0 && (
+          {places.length > 0 && (
             <Map
               setMapMarkers={this.setMapMarkers}
-              places={this.state.places}
+              places={places}
             />
           )}
-          {this.state.markers && (
+          {markers && (
             <Navbar
-              map={this.state.map}
-              infoWindow={this.state.infoWindow}
-              markers={this.state.markers}
+              map={map}
+              infoWindow={infoWindow}
+              markers={markers}
             />
           )}
         </main>

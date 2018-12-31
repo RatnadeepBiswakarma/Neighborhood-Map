@@ -2,25 +2,22 @@ import React, { Component } from "react";
 import "./Menu.css";
 
 class Menu extends Component {
-  markers = this.props.markers;
-  map = this.props.map;
-  state = {
-    dataLoaded: false
-  };
   render() {
+    const markers = this.props.markers;
+    const map = this.props.map;
     return (
       <ul id="ul">
-        {this.markers.map(marker => {
+        {markers.map(marker => {
           return (
             <li
               tabIndex="0"
               role="button"
               id={marker.id}
               onClick={e => {
-                this.setState({ displayAllMarkers: false });
-                this.markers.map(mark => {
+                // render list names of the markers
+                markers.map(mark => {
                   if (mark.id.trim() === e.target.id.trim()) {
-                    mark.setMap(this.map);
+                    mark.setMap(map);
                     let google = window.google;
                     mark.setAnimation(google.maps.Animation.BOUNCE);
                     return google.maps.event.trigger(mark, "click");
