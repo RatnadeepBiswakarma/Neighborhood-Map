@@ -26,6 +26,7 @@ export default function Navbar(props) {
               marker.setAnimation(window.google.maps.Animation.DROP);
               return marker.setMap(props.map);
             });
+            document.getElementById("navbar").classList.toggle("toggle");
           }}
         >
           Show All
