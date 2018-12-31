@@ -26,6 +26,8 @@ class Menu extends Component {
                     return mark.setAnimation(null);
                   }
                 });
+                // hide list back
+                document.getElementById("navbar").classList.toggle("toggle");
               }}
               key={marker.id}
               title={marker.title}
