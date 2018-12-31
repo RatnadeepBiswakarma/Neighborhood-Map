@@ -43,6 +43,7 @@ class App extends Component {
         }
       })
       .catch((err) => {
+        this.setState({loader: false});
         return this.handleError(err);
       });
   }
