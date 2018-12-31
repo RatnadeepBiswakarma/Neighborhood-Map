@@ -5,22 +5,29 @@ import Header from "./components/Header/Header";
 import "./components/Menu/Menu.css";
 import Navbar from "./components/Navbar/Nav";
 import Loader from "./components/Loader/Loader";
-// import Error from "./components/Error/Error";
+import Error from "./components/Error/Error";
 import { getLocationData } from "./components/Apis/Apis";
 
 class App extends Component {
-  state = {
-    places: [],
-    placesToDisplay: [],
-    map: null,
-    markers: [],
-    infoWindow: null,
-    // isReady: false,
-    isMapLoaded: false,
-    query: "",
-    displayAllMarkers: false,
-    requestStatus: ""
-  };
+  constructor() {
+    super();
+    this.state = {
+      places: [],
+      placesToDisplay: [],
+      map: null,
+      markers: [],
+      infoWindow: null,
+      error: false,
+      errorMessage: '',
+      isMapLoaded: false,
+      query: "",
+      displayAllMarkers: false,
+      requestStatus: ""
+    };
+    this.handleError = this.handleError.bind(this);
+    this.setMapMarkers = this.setMapMarkers.bind(this);
+
+  }
 
   componentDidMount() {
     // fetch data from foresquare, nearby location of London
@@ -34,11 +41,13 @@ class App extends Component {
           this.setState({ requestStatus: status });
         }
       })
-      .catch(function(err) {
-        return alert(
-          `Error occurred while fetching data from server, app may not work correctly: ${err}`
-        );
+      .catch((err) => {
+        return this.handleError(err);
       });
+  }
+  // handle error method
+  handleError(message) {
+    this.setState({error: true, errorMessage: message});
   }
 
   // method to store map, markers array and infoWindow to access in this file
@@ -46,13 +55,15 @@ class App extends Component {
     this.setState({ map: map, markers: markers, infoWindow: infoWindow });
   };
   render() {
-    const {places, markers, map, infoWindow} = this.state;
+    const {places, markers, map, infoWindow, error} = this.state;
     return (
       <div id="container">
         {/* header component  */}
         <Header />
         {/* loader component */}
-        {places.length < 1 && <Loader />}
+        {/* {places.length < 1 && <Loader />} */}
+        {/* error message popup */}
+        {error && <Error message='Failed to fetch location data' />}
         <main id="main">
           {/* google map component  */}
           {places.length > 0 && (
