@@ -9,7 +9,7 @@ nav {
     transition: ease-out;
     transition-delay: initial;
     transition-duration: 0.3s;
-    height: 99%;
+    height: 100%;
     background-image: linear-gradient(140deg, #ce0ae7fd, #1e14a5);
 }
 /* class to hide and show menu */

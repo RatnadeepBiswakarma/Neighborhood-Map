@@ -16,6 +16,10 @@ This is a React based single page application presenting some locations of Londo
 
 ---
 
+### See it live [here](https://ratnadeep-neighborhood-map.netlify.com/)
+
+## Run in your local machine
+
 ### `npm install`
 
 Run the above command to install `npm` in the project folder:
