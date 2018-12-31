@@ -61,7 +61,7 @@ class App extends Component {
         {/* header component  */}
         <Header />
         {/* loader component */}
-        {/* {places.length < 1 && <Loader />} */}
+        {places.length < 1 && <Loader />}
         {/* error message popup */}
         {error && <Error message='Failed to fetch location data' />}
         <main id="main">
