@@ -2,6 +2,10 @@
 
 ### See it live [https://ratnadeep-neighborhood-map.netlify.com/](https://ratnadeep-neighborhood-map.netlify.com/)
 
+# Demo
+
+<img src="./demo.gif" alt="Demo GIF">
+
 ---
 
 This is a React based single page application presenting some locations of London. We can see the location to find Restaurant, Hotel, Library, Gallery, Statue etc. By default some places of London are pointed on the map. We can sort them by typing name in the search box or by selecting the specified name from the list. We can see the name and address of the place by clicking either on the name on the list or the marker on the map. Please follow the instructions mentioned below to run it in your machine.
